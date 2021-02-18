@@ -1,0 +1,57 @@
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0 text-dark">Alunos</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
+                    <li class="breadcrumb-item active">Alunos</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="content">
+    <div class="card card-outline card-purple elevation-2">
+        <div class="card-body">
+            <p-table #dt2  styleClass="p-datatable-striped" [value]="resources" [paginator]="true" [rows]="5"
+                [totalRecords]="resources.length" [loading]="loading" [globalFilterFields]="['nome','sobrenome','telefone']">
+               
+                <ng-template pTemplate="header">
+                    <tr class="d-flex">
+                        <th class="col-sm-4">Nome</th>
+                        <th class="col-sm-4">Sobrenome</th>
+                        <th class="col-sm-2">Telefone</th>
+                        <th class="col-sm-2">Ações</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-resource>
+                    <tr class="d-flex">
+                        <td class="col-sm-4">{{resource.nome}}</td>
+                        <td class="col-sm-4">{{resource.sobrenome}}</td>
+                        <td class="col-sm-2">{{resource.telefone}}</td>
+                        <td class="col-sm-2">
+                            <a [routerLink]="[resource.id]" pTooltip="Editar" tooltipPosition="top"
+                                class="btn btn-info btn-sm mr-1"><i class="fa fa-search"></i></a>
+                            <button (click)="excluir(resource.id)" pTooltip="Editar" tooltipPosition="top"
+                                class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
+                        </td>
+                    </tr>
+                </ng-template>
+               
+            </p-table>
+            <div *ngIf="loading">
+                <p-progressBar mode="indeterminate"></p-progressBar>
+            </div>
+            
+            <div class="mt-2">
+                {{resources.length}} registros encontrados
+                <a routerLink="new" pTooltip="Editar" tooltipPosition="top"
+                    class="btn btn-success btn-lg float-right">Adicionar</a>
+            </div>
+        </div>
+    </div>
+
+</div>
