@@ -26,6 +26,10 @@ export class AuthService  {
     return this.http.post(`${this.API_PATH}login`,user, {observe: 'response'});
   }
 
+  public signUp(user: User): Observable<any> {
+    return this.http.post(`${this.API_PATH}sign-up`,user, {observe: 'response'});
+  }
+
   public validate() : Observable<any>{
     return this.http.get(`${this.API_PATH}auth/validate`);
   

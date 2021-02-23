@@ -4,7 +4,7 @@ export class User extends BaseResourceModel {
     constructor(
         public username?: string,
         public password?: string,
-        public role?: string
+        public nivel?: string
     ) {
         super();
     }
