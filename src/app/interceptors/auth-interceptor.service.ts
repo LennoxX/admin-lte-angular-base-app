@@ -1,7 +1,7 @@
 import { TokenService } from './../services/token-service.service';
 
 
-import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpEventType, HttpResponse } from '@angular/common/http';
+import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpEventType, HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Observable, of, throwError } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
@@ -27,22 +27,40 @@ export class AuthInterceptor implements HttpInterceptor {
           this.tokenService.storeToken(ev.headers.get('Authorization'))
 
       }),
-      catchError((err: any) => {
-        if (err.status === 403) {
-          this.tokenService.deleteToken();
-          this.router.navigateByUrl(`/auth/sign-in`).then(() => {
-            this.messageService.add({
-              severity: 'error',
-              summary: 'Sessão Expirada',
-              detail: 'Faça o Login Novamente'
-            });
-          }
-          )
-        }
-        //log error 
+      catchError((error: HttpErrorResponse) => {
 
-        return of(err);
-      })
+
+        let errorMessage = '';
+        if (error.error instanceof ErrorEvent) {
+          // client-side error
+          errorMessage = `Error: ${error.error.message}`;
+        } else {
+          // server-side error
+          errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+
+        }
+
+        if (error.status === 401) {
+          console.log(error)
+          this.router.navigateByUrl('/auth/sign-in').then(() => {
+            this.messageService.add({
+              key: 'toast-auth',
+              severity: 'error',
+              summary: error.error != null ? 'Erro ao autenticar' : 'Sessão Expirada',
+              detail: error.error != null ? error.error.message : 'Faça o login novamente'
+            });
+          });
+        } else if (error.status === 403) {
+          this.router.navigateByUrl('/error/forbidden', { skipLocationChange: true });
+        }
+        else if (error.status === 404) {
+          this.router.navigateByUrl('/error/not-found', { skipLocationChange: true });
+        }
+
+
+        return throwError(error);
+      }
+      )
     );
 
   }

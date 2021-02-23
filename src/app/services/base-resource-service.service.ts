@@ -19,17 +19,15 @@ export abstract class BaseResourceService<T extends BaseResourceModel> {
   getAll(): Observable<T[]> {
     const url = `${this.API_PATH}`;
     return this.http.get(url).pipe(
-      catchError(this.handleError),
       map(this.jsonDataToResources)
     );
   }
 
- 
+
 
   findById(id: number): Observable<T> {
     const url = `${this.API_PATH}/${id}`;
     return this.http.get(url).pipe(
-      catchError(this.handleError),
       map(this.jsonDataToResource)
     );
   }
@@ -37,7 +35,6 @@ export abstract class BaseResourceService<T extends BaseResourceModel> {
   create(resource: T): Observable<T> {
     const url = `${this.API_PATH}`;
     return this.http.post(url, resource).pipe(
-      catchError(this.handleError),
       map(this.jsonDataToResource)
     );
   }
@@ -45,7 +42,6 @@ export abstract class BaseResourceService<T extends BaseResourceModel> {
   update(resource: T): Observable<T> {
     const url = `${this.API_PATH}`;
     return this.http.put(url, resource).pipe(
-      catchError(this.handleError),
       map(() => resource)
     );
   }
@@ -53,7 +49,6 @@ export abstract class BaseResourceService<T extends BaseResourceModel> {
   delete(id: number): Observable<any> {
     const url = `${this.API_PATH}/${id}`;
     return this.http.delete(url).pipe(
-      catchError(this.handleError),
       map(() => null)
     );
   }
@@ -69,22 +64,14 @@ export abstract class BaseResourceService<T extends BaseResourceModel> {
   protected jsonDataToResource(jsonData: T): T {
     return jsonData as T;
   }
-/* 
-  protected jsonDataPagesToResources(jsonData: Response<Page<T>>): Page<T> {
-    const resources = Object.assign(new Response(), jsonData.data);
-    return resources;
-  } */
+  /* 
+    protected jsonDataPagesToResources(jsonData: Response<Page<T>>): Page<T> {
+      const resources = Object.assign(new Response(), jsonData.data);
+      return resources;
+    } */
 
-  protected handleError(error: Response<T[]>): Observable<any> {
-    console.log('ERRO NA REQUISIÇÃO', error);
-    // ERROR UNAUTHORIZED
-    if (error.status === '401') {
-      // REDIRECIONA PARA A TELA DE LOGIN
-      window.location.replace('/auth/login');
-    } else if (error.status === '0') {
-      window.location.replace('/auth/login');
-    }
-    return throwError(error);
+  protected handleError(error: Response<T[]>) {
+    throw (error);
   }
 
 }

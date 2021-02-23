@@ -5,7 +5,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { User } from 'src/app/models/user.model';
 import { Router } from '@angular/router';
-import { HttpResponse } from '@angular/common/http';
+import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import { catchError } from 'rxjs/operators';
+import { throwError } from 'rxjs';
 
 @Component({
   selector: 'app-sign-in',
@@ -37,25 +39,15 @@ export class SignInComponent implements OnInit {
   }
 
   onSubmit() {
-    //  this.loading = true;
+    this.loading = true;
 
     this.authService.signin(this.loginForm.value).subscribe((res: HttpResponse<any>) => {
       this.tokenService.storeToken(res.headers.get('Authorization'));
-      // this.tokenService.storeUser(res.user)
       this.router.navigateByUrl("/");
     },
-      (err) => {
-        console.log(err);
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Ocorreu um erro ao processar sua solicitação!',
-          detail: err.error.message
-        });
+      (error: HttpErrorResponse) => {
         this.loading = false;
       }
-    );
-
-
+    )
   }
-
 }

@@ -7,8 +7,15 @@ import { AuthenticationLayoutComponent } from './layouts/authentication-layout/a
 const routes: Routes = [
   {
     path: '',
-    component: AdminLayoutComponent,
-    
+    component: AdminLayoutComponent,    
+    children:[{
+      path: '',
+      loadChildren: () => import('./layouts/admin-layout/admin-layout.module').then(m=>m.AdminLayoutModule)
+    }]
+  },
+  {
+    path: 'error',
+    component: AdminLayoutComponent,    
     children:[{
       path: '',
       loadChildren: () => import('./layouts/admin-layout/admin-layout.module').then(m=>m.AdminLayoutModule)
@@ -21,7 +28,8 @@ const routes: Routes = [
       path:'',
       loadChildren: () => import('./layouts/authentication-layout/authentication-layout.module').then(m=>m.AuthenticationLayoutModule)
     }]
-  }
+  },
+  
  
 ];
 

@@ -46,7 +46,6 @@ export class AlunoFormComponent implements OnInit, AfterContentChecked {
   }
 
   protected setCurrentAction() {
-    console.log(this.route.snapshot.url[0].path)
     if (this.route.snapshot.url[0].path === 'new') {
       this.currentAction = 'new';
     } else {
@@ -74,7 +73,6 @@ export class AlunoFormComponent implements OnInit, AfterContentChecked {
           .subscribe(
             (resource) => {
               this.resource = resource;
-              console.log(this.resource)
               this.resourceForm.patchValue(this.resource);
               this.loading = false;
             },
@@ -121,7 +119,6 @@ export class AlunoFormComponent implements OnInit, AfterContentChecked {
     const tmp: Aluno = new Aluno();
      Object.assign(tmp, this.resourceForm.value);
      tmp.id = 0; // .NET NÃO ACEITA NULL PARA INT
-     console.log(tmp)
    
     this.resourceService.create(tmp).subscribe(
       () => this.actionsForSuccess(tmp),
@@ -133,7 +130,6 @@ export class AlunoFormComponent implements OnInit, AfterContentChecked {
     let tmp: Aluno = new Aluno();
     Object.assign(tmp, this.resourceForm.value);
     tmp.id = this.resource.id
-    console.log(tmp);
     this.resourceService.update(tmp).subscribe(
       () => this.actionsForSuccess(tmp),
       error => this.actionsForError(error)
@@ -151,7 +147,6 @@ export class AlunoFormComponent implements OnInit, AfterContentChecked {
   }
 
   protected actionsForError(error) {
-    console.log(error)
     const baseComponentPath: string = this.route.parent.snapshot.url[0].path;
     this.submittingForm = false;
     this.router.navigateByUrl(baseComponentPath).then(
