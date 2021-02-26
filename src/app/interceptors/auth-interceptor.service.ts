@@ -25,21 +25,9 @@ export class AuthInterceptor implements HttpInterceptor {
       tap((ev: any) => {
         if (ev instanceof HttpResponse)
           this.tokenService.storeToken(ev.headers.get('Authorization'))
-
       }),
       catchError((error: HttpErrorResponse) => {
-
-
-        let errorMessage = '';
-        if (error.error instanceof ErrorEvent) {
-          // client-side error
-          errorMessage = `Error: ${error.error.message}`;
-        } else {
-          // server-side error
-          errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
-
-        }
-
+        
         if (error.status === 401) {
           this.router.navigateByUrl('/auth/sign-in').then(() => {
             this.tokenService.deleteToken();
@@ -56,8 +44,6 @@ export class AuthInterceptor implements HttpInterceptor {
         else if (error.status === 404) {
           this.router.navigateByUrl('/error/not-found', { skipLocationChange: true });
         }
-
-
         return throwError(error);
       }
       )

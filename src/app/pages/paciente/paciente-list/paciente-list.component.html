@@ -22,7 +22,7 @@
                 <ng-template pTemplate="header">
                     <tr class="d-flex">
                         <th class="col-sm-4">Nome</th>
-                        <th class="col-sm-4">Sobrenome</th>
+                        <th class="col-sm-4">Sexo</th>
                         <th class="col-sm-2">Telefone</th>
                         <th class="col-sm-2">Ações</th>
                     </tr>
@@ -30,8 +30,8 @@
                 <ng-template pTemplate="body" let-resource>
                     <tr class="d-flex">
                         <td class="col-sm-4">{{resource.nome}}</td>
-                        <td class="col-sm-4">{{resource.sobrenome}}</td>
-                        <td class="col-sm-2">{{resource.telefone}}</td>
+                        <td class="col-sm-4">{{resource.sexo | titlecase}}</td>
+                        <td class="col-sm-2">{{resource.telefone | mask: '(00) 0 0000-0000'}}</td>
                         <td class="col-sm-2">
                             <a [routerLink]="[resource.id]" pTooltip="Editar" tooltipPosition="top"
                                 class="btn btn-info btn-sm mr-1"><i class="fa fa-search"></i></a>

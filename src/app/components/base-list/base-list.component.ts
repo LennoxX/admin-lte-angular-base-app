@@ -39,7 +39,6 @@ export class BaseListComponent<T extends BaseResourceModel> implements OnInit {
   }
   protected actionsForError(error: any) {
     this.messageService.add({
-      key: 'system-messages',
       severity: 'error',
       summary: 'Erro',
       detail: 'Ocorreu um erro ao processar sua solicitação!' + error
@@ -48,7 +47,6 @@ export class BaseListComponent<T extends BaseResourceModel> implements OnInit {
 
   protected actionsForSuccess() {
     this.messageService.add({
-      key: 'system-messages',
       severity: 'success',
       summary: 'Sucesso',
       detail: 'Solicitação Processada com Sucesso!'

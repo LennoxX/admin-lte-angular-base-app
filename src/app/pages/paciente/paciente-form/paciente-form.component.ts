@@ -100,21 +100,17 @@ export class PacienteFormComponent implements OnInit, AfterContentChecked {
             }
           );
       }, 1000);
-
     }
   }
 
   confirm() {
-    console.log(this.resourceForm)
     if (this.resourceForm.valid) {
       this.confirmationService.confirm({
         accept: () => {
           this.submitForm()
         },
-
       });
     }
-
   }
 
   submitForm() {
@@ -147,6 +143,8 @@ export class PacienteFormComponent implements OnInit, AfterContentChecked {
     let tmp: Paciente = new Paciente();
     Object.assign(tmp, this.resourceForm.value);
     tmp.id = this.resource.id
+    console.log(tmp)
+
     this.resourceService.update(tmp).subscribe(
       () => this.actionsForSuccess(tmp),
       error => this.actionsForError(error)
@@ -165,6 +163,7 @@ export class PacienteFormComponent implements OnInit, AfterContentChecked {
 
   protected actionsForError(error) {
     const baseComponentPath: string = this.route.parent.snapshot.url[0].path;
+    console.log(error)
     this.submittingForm = false;
     /*  this.router.navigateByUrl(baseComponentPath).then(
        () => this.messageService.add({
