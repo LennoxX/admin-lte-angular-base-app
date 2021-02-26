@@ -1,0 +1,98 @@
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0 text-dark">{{pageTitle}}</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
+                    <li class="breadcrumb-item"><a routerLink="/paciente">Pacientes</a></li>
+                    <li class="breadcrumb-item active">Formulário</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="content">
+    <form (keydown.enter)="$event.preventDefault()" [formGroup]="resourceForm">
+        <div class="card card-outline card-green">
+            <div class="card-body">
+                <div class="form-group row">
+                    <div class="col-sm-12">
+                        *Nome Completo
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <i class="fa fa-user"></i>
+                                </div>
+                            </div>
+                            <input formControlName="nome" type="text" required class="form-control" placeholder="João José Ferreira">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group has-feedback row">
+                    <div class="col-sm-3">
+                        *Sexo
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <i class="fas fa-venus-mars"></i>
+                                </div>
+                            </div>
+                            <select formControlName="sexo" class="custom-select">
+                                <option value="MASCULINO">Masculino</option>
+                                <option value="FEMININO">Feminino</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        *Data de Nascimento
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <i class="fas fa-venus-mars"></i>
+                                </div>
+                            </div>
+                            <input formControlName="dataNascimento" type="date" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        *Email
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <i class="fa fa-mail-bulk"></i>
+                                </div>
+                            </div>
+                            <input formControlName="email" type="text" required class="form-control" placeholder="joao@hotmail.com">
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        *Telefone
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <i class="fa fa-phone"></i>
+                                </div>
+                            </div>
+                            <input type="text" formControlName="telefone" class="form-control" mask="(00) 0 0000-0000" />
+
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="card-footer">
+                <button class="btn btn-success float-right" [disabled]="submittingForm"
+                    (click)="confirm()">Salvar</button>
+                <button class="btn btn-danger" [routerLink]="['/paciente']">Cancelar</button>
+            </div>
+            <div *ngIf="loading" class="overlay">
+                <i class="fas fa-2x fa-sync-alt fa-spin"></i>
+            </div>
+        </div>
+    </form>
+
+</div>

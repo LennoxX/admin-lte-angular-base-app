@@ -8,7 +8,7 @@ import { HomeComponentComponent } from 'src/app/pages/home/home-component/home-c
 const routes: Routes = [
   {path: '', component: HomeComponentComponent, canActivate: [AuthGuard]},
   {path: 'error', loadChildren: () => import('./../../pages/errors/errors.module').then(m=>m.ErrorsModule)},
-  {path: 'aluno', loadChildren: ()=> import('./../../pages/aluno/aluno.module').then(m=>m.AlunoModule) },
+  {path: 'paciente', loadChildren: ()=> import('./../../pages/paciente/paciente.module').then(m=>m.PacienteModule) },
 ];
 
 @NgModule({

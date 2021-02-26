@@ -1,18 +1,22 @@
-import { AlunoService } from './../../../services/aluno-service.service';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Component, OnInit, Injector, AfterContentChecked } from '@angular/core';
-import { Aluno } from 'src/app/models/aluno.model';
-import { switchMap } from 'rxjs/operators';
-import { ActivatedRoute, Router } from '@angular/router';
-import { MessageService, ConfirmationService } from 'primeng/api';
+import { formatDate, TitleCasePipe } from "@angular/common";
+import { Component, OnInit, AfterContentChecked, Injector } from "@angular/core";
+import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+import { ActivatedRoute, Router } from "@angular/router";
+import { MessageService, ConfirmationService } from "primeng/api";
+import { switchMap } from "rxjs/operators";
+import { Paciente } from "../../../models/paciente.model";
+import { PacienteService } from "../../../services/paciente-service.service";
+import * as moment from 'moment';
+
 
 @Component({
-  selector: 'app-aluno-form',
-  templateUrl: './aluno-form.component.html',
-  styleUrls: ['./aluno-form.component.css']
+  selector: 'app-paciente-form',
+  templateUrl: './paciente-form.component.html',
+  styleUrls: ['./paciente-form.component.css'],
+  providers: [TitleCasePipe]
 })
-export class AlunoFormComponent implements OnInit, AfterContentChecked {
-  resource: Aluno = new Aluno();
+export class PacienteFormComponent implements OnInit, AfterContentChecked {
+  resource: Paciente = new Paciente();
   resourceForm: FormGroup;
   currentAction: string;
   pageTitle: string;
@@ -22,7 +26,7 @@ export class AlunoFormComponent implements OnInit, AfterContentChecked {
   protected router: Router;
   protected formBuilder: FormBuilder;
 
-  constructor(private injector: Injector, private resourceService: AlunoService, private messageService: MessageService, private confirmationService: ConfirmationService) {
+  constructor(private titleCasePipe: TitleCasePipe, private injector: Injector, private resourceService: PacienteService, private messageService: MessageService, private confirmationService: ConfirmationService) {
     this.formBuilder = this.injector.get(FormBuilder);
     this.route = this.injector.get(ActivatedRoute);
     this.router = this.injector.get(Router);
@@ -57,8 +61,10 @@ export class AlunoFormComponent implements OnInit, AfterContentChecked {
     this.resourceForm = this.formBuilder.group({
       id: [null],
       nome: [null, Validators.required],
-      sobrenome: [null, Validators.required],
-      telefone: [null, Validators.required]
+      sexo: [null, Validators.required],
+      telefone: [],
+      email: [],
+      dataNascimento: [null, Validators.required]
     });
   }
 
@@ -72,19 +78,25 @@ export class AlunoFormComponent implements OnInit, AfterContentChecked {
         )
           .subscribe(
             (resource) => {
-              this.resource = resource;
-              this.resourceForm.patchValue(this.resource);
+              this.resource = resource
+              let tmpDate = (moment(resource.dataNascimento, 'YYYY-MM-DD').format('yyyy-MM-DD'))
+              resource.dataNascimento = null;
+              this.resourceForm.patchValue(resource);
+              this.resourceForm.controls['dataNascimento'].setValue(tmpDate)
+
               this.loading = false;
             },
             (error) => {
+              if (error.status != 404) {
+                this.router.navigateByUrl('/paciente').then(() =>
+                  this.messageService.add({
+                    severity: 'error',
+                    summary: 'Erro ao carregar os dados'
+                  })
+                )
+                this.loading = false;
+              }
 
-              this.router.navigateByUrl('/aluno').then(() =>
-                this.messageService.add({
-                  severity: 'error',
-                  summary: 'Erro ao carregar os dados'
-                })
-              )
-              this.loading = false;
             }
           );
       }, 1000);
@@ -93,12 +105,16 @@ export class AlunoFormComponent implements OnInit, AfterContentChecked {
   }
 
   confirm() {
-    this.confirmationService.confirm({
-      accept: () => {
-        this.submitForm()
-      },
+    console.log(this.resourceForm)
+    if (this.resourceForm.valid) {
+      this.confirmationService.confirm({
+        accept: () => {
+          this.submitForm()
+        },
 
-    });
+      });
+    }
+
   }
 
   submitForm() {
@@ -116,10 +132,11 @@ export class AlunoFormComponent implements OnInit, AfterContentChecked {
   }
 
   protected createResource() {
-    const tmp: Aluno = new Aluno();
-     Object.assign(tmp, this.resourceForm.value);
-     tmp.id = 0; // .NET NÃO ACEITA NULL PARA INT
-   
+    const tmp: Paciente = new Paciente();
+    Object.assign(tmp, this.resourceForm.value);
+
+    tmp.nome = this.titleCasePipe.transform(tmp.nome);
+
     this.resourceService.create(tmp).subscribe(
       () => this.actionsForSuccess(tmp),
       error => this.actionsForError(error)
@@ -127,7 +144,7 @@ export class AlunoFormComponent implements OnInit, AfterContentChecked {
   }
 
   protected updateResource() {
-    let tmp: Aluno = new Aluno();
+    let tmp: Paciente = new Paciente();
     Object.assign(tmp, this.resourceForm.value);
     tmp.id = this.resource.id
     this.resourceService.update(tmp).subscribe(
@@ -137,8 +154,8 @@ export class AlunoFormComponent implements OnInit, AfterContentChecked {
   }
 
   protected actionsForSuccess(resource) {
-   
-    this.router.navigateByUrl('/aluno').then(
+
+    this.router.navigateByUrl('/paciente').then(
       () => this.messageService.add({
         severity: 'success',
         summary: 'Sucesso',
@@ -149,12 +166,12 @@ export class AlunoFormComponent implements OnInit, AfterContentChecked {
   protected actionsForError(error) {
     const baseComponentPath: string = this.route.parent.snapshot.url[0].path;
     this.submittingForm = false;
-    this.router.navigateByUrl(baseComponentPath).then(
-      () => this.messageService.add({
-        severity: 'error',
-        summary: 'Erro',
-        detail: error
-      }));
+    /*  this.router.navigateByUrl(baseComponentPath).then(
+       () => this.messageService.add({
+         severity: 'error',
+         summary: 'Erro',
+         detail: error
+       })); */
   }
 
 

@@ -21,6 +21,8 @@
     "@angular/platform-browser-dynamic": "~11.0.0",
     "@angular/router": "~11.0.0",
     "admin-lte": "^3.0.5",
+    "moment": "^2.29.1",
+    "ngx-mask": "^11.1.4",
     "primeicons": "^4.0.0",
     "primeng": "^10.0.3",
     "rxjs": "~6.6.0",

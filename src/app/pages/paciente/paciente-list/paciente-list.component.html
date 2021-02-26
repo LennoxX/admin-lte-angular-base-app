@@ -2,19 +2,19 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0 text-dark">Alunos</h1>
+                <h1 class="m-0 text-dark">Pacientes</h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
-                    <li class="breadcrumb-item active">Alunos</li>
+                    <li class="breadcrumb-item active">Pacientes</li>
                 </ol>
             </div>
         </div>
     </div>
 </div>
 <div class="content">
-    <div class="card card-outline card-purple elevation-2">
+    <div class="card card-outline card-green elevation-2">
         <div class="card-body">
             <p-table #dt2  styleClass="p-datatable-striped" [value]="resources" [paginator]="true" [rows]="5"
                 [totalRecords]="resources.length" [loading]="loading" [globalFilterFields]="['nome','sobrenome','telefone']">

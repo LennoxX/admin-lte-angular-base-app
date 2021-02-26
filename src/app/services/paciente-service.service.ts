@@ -1,13 +1,13 @@
 import { Injectable, Injector } from '@angular/core';
-import { Aluno } from '../models/aluno.model';
+import { Paciente } from '../models/paciente.model';
 import { BaseResourceService } from './base-resource-service.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AlunoService extends BaseResourceService<Aluno> {
+export class PacienteService extends BaseResourceService<Paciente> {
 
   constructor(protected injector: Injector) {
-    super('categorias', injector);
+    super('pacientes', injector);
    }
 }
