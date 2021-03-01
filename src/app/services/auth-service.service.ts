@@ -35,6 +35,11 @@ export class AuthService  {
   
   }
 
+
+  public getUser(): Observable<any> {
+    return this.http.get(`${this.API_PATH}auth/user`);
+  }
+
   public signout(){
     this.tokenService.deleteToken();
     this.router.navigateByUrl("/auth/sign-in");

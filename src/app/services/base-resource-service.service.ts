@@ -2,12 +2,11 @@ import { environment } from './../../environments/environment';
 import { Injector } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { Observable, throwError } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
-import { BaseResourceModel } from '../models/base-resource-model.model';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { Response } from '../models/response.model';
 
-export abstract class BaseResourceService<T extends BaseResourceModel> {
+export abstract class BaseResourceService<T> {
 
   protected http: HttpClient;
   protected readonly API_PATH = `${environment.BASE_URL + this.path}`
@@ -22,8 +21,6 @@ export abstract class BaseResourceService<T extends BaseResourceModel> {
       map(this.jsonDataToResources)
     );
   }
-
-
 
   findById(id: number): Observable<T> {
     const url = `${this.API_PATH}/${id}`;
@@ -52,8 +49,6 @@ export abstract class BaseResourceService<T extends BaseResourceModel> {
       map(() => null)
     );
   }
-
-  // Metodos Protegidos
 
   protected jsonDataToResources(jsonData: T[]): T[] {
     const resources: T[] = [];

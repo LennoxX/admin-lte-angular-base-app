@@ -18,7 +18,7 @@ import {ConfirmationService} from 'primeng/api';
 import { TitleCasePipe } from '@angular/common';
 @NgModule({
   declarations: [
-    AppComponent,  
+    AppComponent
   ],
   imports: [    
     HttpClientModule,

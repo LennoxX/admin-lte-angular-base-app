@@ -3,11 +3,8 @@ import { TokenService } from './../../../services/token-service.service';
 import { AuthService } from './../../../services/auth-service.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { User } from 'src/app/models/user.model';
 import { Router } from '@angular/router';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
-import { catchError } from 'rxjs/operators';
-import { throwError } from 'rxjs';
 
 @Component({
   selector: 'app-sign-in',
@@ -43,7 +40,11 @@ export class SignInComponent implements OnInit {
 
     this.authService.signin(this.loginForm.value).subscribe((res: HttpResponse<any>) => {
       this.tokenService.storeToken(res.headers.get('Authorization'));
-      this.router.navigateByUrl("/");
+      this.authService.getUser().subscribe((user) => {
+        this.tokenService.storeUser(user);
+        this.router.navigateByUrl("/");
+      })
+
     },
       (error: HttpErrorResponse) => {
         this.loading = false;

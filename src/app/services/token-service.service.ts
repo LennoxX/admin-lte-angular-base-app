@@ -5,18 +5,19 @@ import { Injectable } from "@angular/core";
   providedIn: "root"
 })
 export class TokenService {
-  constructor() {}
+  constructor() { }
 
   storeToken(token: string) {
     sessionStorage.setItem("token", token);
   }
 
   storeUser(user: User) {
-    sessionStorage.setItem('user', user.username);
+    sessionStorage.setItem('user', JSON.stringify(user));
   }
 
-  getUser(): string{
-    return sessionStorage.getItem('user');
+  getUser(): User {
+    var user: User = JSON.parse(sessionStorage.getItem('user'))
+    return user;
   }
 
   getToken() {

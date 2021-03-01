@@ -6,10 +6,10 @@
     <div class="sidebar">
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-           <img src="assets/logo.png" class="img-circle elevation-2">
+           <img [src]="tokenService.getUser()?.imagemPerfil != null ? tokenService.getUser()?.imagemPerfil : 'assets/logo.png' " class="img-circle elevation-2">
         </div>
         <div class="info">
-          <a href="#" class="d-block">{{ tokenService.getUser() | titlecase }}</a>
+          <a href="#" class="d-block">{{ tokenService.getUser()?.username | titlecase }}</a>
         </div>
       </div>
       <nav class="mt-2">

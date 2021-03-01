@@ -8,7 +8,7 @@ import { BaseResourceService } from 'src/app/services/base-resource-service.serv
   templateUrl: './base-list.component.html',
   styleUrls: ['./base-list.component.css']
 })
-export class BaseListComponent<T extends BaseResourceModel> implements OnInit {
+export class BaseListComponent<T> implements OnInit {
 
   resources: T[] = new Array();
   loading: boolean = false;

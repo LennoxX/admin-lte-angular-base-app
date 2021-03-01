@@ -7,15 +7,26 @@ import { AuthenticationLayoutComponent } from './layouts/authentication-layout/a
 const routes: Routes = [
   {
     path: '',
-    component: AdminLayoutComponent,    
+    component: AdminLayoutComponent,
+    canActivate: [AuthGuard],
     children:[{
       path: '',
       loadChildren: () => import('./layouts/admin-layout/admin-layout.module').then(m=>m.AdminLayoutModule)
     }]
   },
   {
+    path: 'profile',
+    component: AdminLayoutComponent,
+    canActivate: [AuthGuard],    
+    children:[{
+      path: '',
+      loadChildren: () => import('./pages/profile/profile.module').then(m=>m.ProfileModule)
+    }]
+  },
+  {
     path: 'error',
-    component: AdminLayoutComponent,    
+    component: AdminLayoutComponent,
+    canActivate: [AuthGuard],    
     children:[{
       path: '',
       loadChildren: () => import('./layouts/admin-layout/admin-layout.module').then(m=>m.AdminLayoutModule)

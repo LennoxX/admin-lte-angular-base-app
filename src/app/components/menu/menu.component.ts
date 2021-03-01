@@ -11,6 +11,7 @@ export class MenuComponent implements OnInit {
   constructor(public tokenService:TokenService) { }
 
   ngOnInit(): void {
+    console.log('ae')
   }
 
 }
