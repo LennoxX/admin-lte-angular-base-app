@@ -2,7 +2,7 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                
+
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
@@ -16,12 +16,13 @@
 <div class="content">
     <form (keydown.enter)="$event.preventDefault()" [formGroup]="resourceForm">
 
-        <div class="form-group row">
-            <div class="col-sm-3">
-                <div class="card card-gray card-outline">
+        <div class="d-flex justify-content-center">
+            <div class="col-sm-6">
+                <div class="card card-green card-outline">
                     <div class="card-body box-profile">
                         <div class="text-center">
-                            <img class="profile-user-img img-fluid img-circle" [src]="resource?.imagemPerfil != null ? resource.imagemPerfil : 'assets/logo.png'"
+                            <img class="profile-user-img img-fluid img-circle"
+                                [src]="resource?.imagemPerfil != null ? resource.imagemPerfil : 'assets/logo.png'"
                                 alt="User profile picture">
                         </div>
 
@@ -38,8 +39,15 @@
                                 <b>Telefone</b> <a class="float-right">{{resource?.telefone | number}}</a>
                             </li>
                         </ul>
-
-                        <a href="#" class="btn btn-primary btn-block"><b>Follow</b></a>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <a href="#" class="btn btn-info btn-block"><b>Alterar Dados</b></a>
+                            </div>
+                            <div class="col-sm-6">
+                                <a href="#" class="btn btn-danger btn-block"><b>Alterar Senha</b></a>
+                            </div>
+                        </div>
+                        
                     </div>
                     <!-- /.card-body -->
                 </div>

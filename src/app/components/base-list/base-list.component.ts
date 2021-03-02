@@ -38,11 +38,13 @@ export class BaseListComponent<T> implements OnInit {
 
   }
   protected actionsForError(error: any) {
-    this.messageService.add({
-      severity: 'error',
-      summary: 'Erro',
-      detail: 'Ocorreu um erro ao processar sua solicitação!' + error
-    });
+    if (error.status != 401 && error.status != 403) {
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Erro',
+        detail: 'Ocorreu um erro ao processar sua solicitação!' + error
+      });
+    }
   }
 
   protected actionsForSuccess() {
