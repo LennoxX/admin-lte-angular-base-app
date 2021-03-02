@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { BaseResourceModel } from 'src/app/models/base-resource-model.model';
 import { BaseResourceService } from 'src/app/services/base-resource-service.service';
 
 @Component({

@@ -2,7 +2,6 @@ import { PacienteService } from './../../../services/paciente-service.service';
 import { BaseListComponent } from '../../../components/base-list/base-list.component';
 import { Component } from '@angular/core';
 import { ConfirmationService, LazyLoadEvent, MessageService } from 'primeng/api';
-import { FilterMetadata } from 'primeng/api';
 import { Paciente } from '../../../models/paciente.model';
 
 @Component({

@@ -1,4 +1,5 @@
-import { User } from './../models/user.model';
+import { Pessoa } from './../models/pessoa.model.ts';
+import { Usuario } from './../models/user.model';
 import { Injectable } from "@angular/core";
 
 @Injectable({
@@ -11,12 +12,13 @@ export class TokenService {
     sessionStorage.setItem("token", token);
   }
 
-  storeUser(user: User) {
+  storeUser(user: Usuario) {
     sessionStorage.setItem('user', JSON.stringify(user));
   }
 
-  getUser(): User {
-    var user: User = JSON.parse(sessionStorage.getItem('user'))
+  getUser(): Pessoa{
+    var user: Pessoa = JSON.parse(sessionStorage.getItem('user'))
+    
     return user;
   }
 
@@ -26,5 +28,15 @@ export class TokenService {
 
   deleteToken() {
     sessionStorage.removeItem("token");
+  }
+
+  
+  deleteUser() {
+    sessionStorage.removeItem("user");
+  }
+
+  deleteAll(){
+    this.deleteToken();
+    this.deleteUser();
   }
 }

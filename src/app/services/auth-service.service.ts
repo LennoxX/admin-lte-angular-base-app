@@ -4,8 +4,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { Injectable, Injector } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { User } from '../models/user.model';
 import { Router } from '@angular/router';
+import { Usuario } from '../models/user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -22,12 +22,12 @@ export class AuthService  {
   constructor(private http:HttpClient, private tokenService:TokenService, private router: Router) {
   }
 
-  public signin(user: User): Observable<any> {
-    return this.http.post(`${this.API_PATH}login`,user, {observe: 'response'});
+  public signin(usuario: Usuario): Observable<any> {
+    return this.http.post(`${this.API_PATH}login`,usuario, {observe: 'response'});
   }
 
-  public signUp(user: User): Observable<any> {
-    return this.http.post(`${this.API_PATH}sign-up`,user, {observe: 'response'});
+  public signUp(usuario: Usuario): Observable<any> {
+    return this.http.post(`${this.API_PATH}sign-up`,usuario, {observe: 'response'});
   }
 
   public validate() : Observable<any>{

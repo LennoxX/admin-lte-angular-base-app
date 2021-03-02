@@ -22,10 +22,9 @@ export class AuthGuard implements CanActivate {
 
       this.authService.validate().subscribe(
         (res) => {               
-          console.log(res)
             obs.next(true);
           }, err => {
-            this.tokenService.deleteToken();
+            this.tokenService.deleteAll();
             this.router.navigateByUrl("/auth/sign-in")
             obs.next(false);
           },   

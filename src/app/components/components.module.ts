@@ -5,10 +5,11 @@ import { FooterComponent } from './footer/footer.component';
 import { RouterModule } from '@angular/router';
 import { BaseListComponent } from './base-list/base-list.component';
 import { TitleCasePipe, CommonModule } from '@angular/common';
+import { MenuPacienteComponent } from './menu-paciente/menu-paciente.component';
 
 
 @NgModule({
-  declarations: [NavComponent, MenuComponent, FooterComponent, BaseListComponent],
+  declarations: [NavComponent, MenuComponent, FooterComponent, BaseListComponent, MenuPacienteComponent],
   imports: [
     RouterModule,
     CommonModule
@@ -16,7 +17,8 @@ import { TitleCasePipe, CommonModule } from '@angular/common';
   exports: [
     NavComponent,
     MenuComponent,
-    FooterComponent
+    FooterComponent,
+    MenuPacienteComponent
   ],
   providers: [
     TitleCasePipe

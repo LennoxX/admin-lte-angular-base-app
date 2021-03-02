@@ -1,19 +1,17 @@
-import { TokenService } from './../../services/token-service.service';
 import { Component, OnInit } from '@angular/core';
+import { TokenService } from 'src/app/services/token-service.service';
 
 @Component({
-  selector: 'app-menu-component',
-  templateUrl: './menu.component.html',
-  styleUrls: ['./menu.component.css']
+  selector: 'app-menu-paciente',
+  templateUrl: './menu-paciente.component.html',
+  styleUrls: ['./menu-paciente.component.css']
 })
-export class MenuComponent implements OnInit {
+export class MenuPacienteComponent implements OnInit {
 
   constructor(public tokenService:TokenService) { }
 
   ngOnInit(): void {
   }
-
-
   formatNome(nome: string){
     console.log(nome)
     var nomes = nome.split(" ", 2)
@@ -23,5 +21,4 @@ export class MenuComponent implements OnInit {
     })
     return nomeFinal
   }
-
 }

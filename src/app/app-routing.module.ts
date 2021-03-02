@@ -29,7 +29,7 @@ const routes: Routes = [
     canActivate: [AuthGuard],    
     children:[{
       path: '',
-      loadChildren: () => import('./layouts/admin-layout/admin-layout.module').then(m=>m.AdminLayoutModule)
+      loadChildren: () => import('./pages/errors/errors.module').then(m=>m.ErrorsModule)
     }]
   },
   {

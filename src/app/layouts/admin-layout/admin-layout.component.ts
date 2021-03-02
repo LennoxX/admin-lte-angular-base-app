@@ -1,3 +1,4 @@
+import { TokenService } from 'src/app/services/token-service.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdminLayoutComponent implements OnInit {
 
-  constructor() { }
+  constructor(public tokenService:TokenService) { }
 
   ngOnInit(): void {
   }

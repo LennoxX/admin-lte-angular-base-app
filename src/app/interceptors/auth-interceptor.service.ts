@@ -30,7 +30,7 @@ export class AuthInterceptor implements HttpInterceptor {
         
         if (error.status === 401) {
           this.router.navigateByUrl('/auth/sign-in').then(() => {
-            this.tokenService.deleteToken();
+            this.tokenService.deleteAll();
             this.messageService.add({
               key: 'toast-auth',
               severity: 'error',

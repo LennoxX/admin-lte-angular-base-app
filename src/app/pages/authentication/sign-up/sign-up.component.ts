@@ -4,7 +4,7 @@ import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { MessageService } from 'primeng/api';
-import { User } from 'src/app/models/user.model';
+import { Usuario } from 'src/app/models/user.model';
 import { AuthService } from 'src/app/services/auth-service.service';
 import { TokenService } from 'src/app/services/token-service.service';
 
@@ -34,12 +34,11 @@ export class SignUpComponent implements OnInit {
 
   onSubmit() {
     this.loading = true;
-    console.log(this.loginForm.value)
-    let usuario =  Object.assign(new User(), this.loginForm.value);
+    let usuario =  Object.assign(new Usuario(), this.loginForm.value);
    
     usuario.nivel = "USUARIO"
     this.authService.signUp(usuario).subscribe((res: HttpResponse<any>) => {
-      console.log(res)
+      usuario(res)
       this.router.navigateByUrl("/auth/sign-in").then(()=> {
         this.messageService.add({
           key: 'toast-auth',
@@ -50,7 +49,7 @@ export class SignUpComponent implements OnInit {
       })
     },
       (error: HttpErrorResponse) => {
-        console.log(error)
+        usuario(error)
         this.loading = false;
         this.messageService.add({
           key: 'toast-auth',
