@@ -8,6 +8,8 @@ import { Paciente } from "../../../models/paciente.model";
 import { PacienteService } from "../../../services/paciente-service.service";
 import * as moment from 'moment';
 import { BaseFormComponent } from "src/app/components/base-form/base-form.component";
+import { Usuario } from "src/app/models/user.model";
+import { NivelEnum } from "src/app/enums/NivelEnum.model";
 
 
 @Component({
@@ -17,7 +19,7 @@ import { BaseFormComponent } from "src/app/components/base-form/base-form.compon
   providers: [TitleCasePipe]
 })
 export class PacienteFormComponent extends BaseFormComponent<Paciente> {
- 
+
   protected route: ActivatedRoute;
   protected router: Router;
   protected formBuilder: FormBuilder;
@@ -84,6 +86,15 @@ export class PacienteFormComponent extends BaseFormComponent<Paciente> {
     const tmp: Paciente = new Paciente();
     Object.assign(tmp, this.resourceForm.value);
     tmp.nome = this.titleCasePipe.transform(tmp.nome);
+
+    var user = new Usuario();
+    user.ativo = true;
+    user.nivel = NivelEnum.PACIENTE
+    user.username = tmp.email.toLowerCase();
+    user.password = this.generatePassword(tmp.dataNascimento);
+
+    tmp.usuario = user;
+
     this.resourceService.create(tmp).subscribe(
       () => this.actionsForSuccess(),
       error => this.actionsForError(error)
@@ -98,5 +109,21 @@ export class PacienteFormComponent extends BaseFormComponent<Paciente> {
       () => this.actionsForSuccess(),
       error => this.actionsForError(error)
     );
+  }
+
+
+
+  private generatePassword(data: Date) {
+    var array = []
+    var password = ""
+    data.toString().split('-').forEach((e) => {
+      array.push(e)
+    })
+    array.reverse();
+    array.forEach((e) => {
+      password = password + e
+    })
+
+    return password;
   }
 }

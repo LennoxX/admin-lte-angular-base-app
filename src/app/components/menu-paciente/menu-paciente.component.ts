@@ -13,7 +13,6 @@ export class MenuPacienteComponent implements OnInit {
   ngOnInit(): void {
   }
   formatNome(nome: string){
-    console.log(nome)
     var nomes = nome.split(" ", 2)
     var nomeFinal = "";
     nomes.forEach(e => {

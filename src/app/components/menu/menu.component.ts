@@ -15,7 +15,6 @@ export class MenuComponent implements OnInit {
 
 
   formatNome(nome: string){
-    console.log(nome)
     var nomes = nome.split(" ", 2)
     var nomeFinal = "";
     nomes.forEach(e => {

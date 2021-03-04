@@ -1,10 +1,11 @@
+import { NivelEnum } from '../enums/NivelEnum.model';
 import { BaseResourceModel } from './base-resource-model.model';
 
 export class Usuario extends BaseResourceModel {
     constructor(
         public username?: string,
         public password?: string,
-        public nivel?: string,
+        public nivel?: NivelEnum,
         public imagemPerfil?: string,
         public ativo?: boolean
     ) {

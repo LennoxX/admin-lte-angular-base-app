@@ -87,12 +87,17 @@ export abstract class BaseFormComponent<T> implements OnInit {
     const baseComponentPath: string = this.route.parent.snapshot.url[0].path;
     console.log(error)
     this.submittingForm = false;
-    this.router.navigateByUrl(baseComponentPath).then(
+    this.messageService.add({
+      severity: 'error',
+      summary: 'Erro',
+      detail: error.message
+    });
+    /* this.router.navigateByUrl(baseComponentPath).then(
       () => this.messageService.add({
         severity: 'error',
         summary: 'Erro',
         detail: error
-      }));
+      })); */
   }
 
   protected abstract createResource();
