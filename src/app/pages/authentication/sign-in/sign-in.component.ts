@@ -1,3 +1,4 @@
+import { ProfileService } from './../../../services/profile.service';
 import { MessageService } from 'primeng/api';
 import { TokenService } from './../../../services/token-service.service';
 import { AuthService } from './../../../services/auth-service.service';
@@ -20,6 +21,7 @@ export class SignInComponent implements OnInit {
   });
   constructor(private formBuilder: FormBuilder,
     private authService: AuthService,
+    private profileService: ProfileService,
     private tokenService: TokenService,
     private router: Router,
     private messageService: MessageService) { }
@@ -40,7 +42,7 @@ export class SignInComponent implements OnInit {
 
     this.authService.signin(this.loginForm.value).subscribe((res: HttpResponse<any>) => {
       this.tokenService.storeToken(res.headers.get('Authorization'));
-      this.authService.getUser().subscribe((user) => {
+      this.profileService.getUser().subscribe((user) => {
         this.tokenService.storeUser(user);
         this.router.navigateByUrl("/");
       })

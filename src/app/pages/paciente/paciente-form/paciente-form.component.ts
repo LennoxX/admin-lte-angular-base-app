@@ -24,7 +24,11 @@ export class PacienteFormComponent extends BaseFormComponent<Paciente> {
   protected router: Router;
   protected formBuilder: FormBuilder;
 
-  constructor(private titleCasePipe: TitleCasePipe, private injector: Injector, protected resourceService: PacienteService, protected messageService: MessageService, protected confirmationService: ConfirmationService) {
+  constructor(private titleCasePipe: TitleCasePipe, 
+    private injector: Injector, 
+    protected resourceService: PacienteService, 
+    protected messageService: MessageService, 
+    protected confirmationService: ConfirmationService) {
     super(resourceService, messageService, confirmationService);
     this.formBuilder = this.injector.get(FormBuilder);
     this.route = this.injector.get(ActivatedRoute);

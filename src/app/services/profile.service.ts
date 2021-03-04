@@ -6,11 +6,12 @@ import { Injectable, Injector } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { Router } from '@angular/router';
 import { Usuario } from '../models/user.model';
+import { Pessoa } from '../models/pessoa.model.ts';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthService  {
+export class ProfileService  {
 
   httpOptions = {
   
@@ -22,24 +23,16 @@ export class AuthService  {
   constructor(private http:HttpClient, private tokenService:TokenService, private router: Router) {
   }
 
-  public signin(usuario: Usuario): Observable<any> {
-    return this.http.post(`${this.API_PATH}login`,usuario, {observe: 'response'});
-  }
-
-  public signUp(usuario: Usuario): Observable<any> {
-    return this.http.post(`${this.API_PATH}sign-up`,usuario, {observe: 'response'});
-  }
-
-  public validate() : Observable<any>{
-    return this.http.get(`${this.API_PATH}auth/validate`);
-  
+  public getUser(): Observable<any> {
+    return this.http.get(`${this.API_PATH}profile/user`);
   }
 
 
-
-  public signout(){
-    this.tokenService.deleteToken();
-    this.router.navigateByUrl("/auth/sign-in");
+  update(resource: Pessoa): Observable<Pessoa> {
+    const url = `${this.API_PATH}profile/user/update`;
+    return this.http.put(url, resource).pipe(
+      map(() => resource)
+    );
   }
 
   

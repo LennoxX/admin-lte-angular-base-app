@@ -1,3 +1,4 @@
+import { ProfileService } from './../../../services/profile.service';
 import { Pessoa } from '../../../models/pessoa.model.ts';
 import { Component, Injector, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -7,6 +8,7 @@ import { BaseFormComponent } from 'src/app/components/base-form/base-form.compon
 import { AuthService } from 'src/app/services/auth-service.service';
 import { TokenService } from 'src/app/services/token-service.service';
 import { UserService } from 'src/app/services/user-service.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-profile-form',
@@ -15,9 +17,9 @@ import { UserService } from 'src/app/services/user-service.service';
 })
 export class ProfileFormComponent extends BaseFormComponent<Pessoa>{
 
-  constructor(private injector: Injector, protected authService: AuthService, 
-    protected resourceService: UserService, 
-    protected messageService: MessageService, 
+  constructor(private injector: Injector, protected profileService: ProfileService,
+    protected resourceService: UserService,
+    protected messageService: MessageService,
     protected confirmationService: ConfirmationService,
     private tokenService: TokenService) {
     super(resourceService, messageService, confirmationService);
@@ -47,15 +49,19 @@ export class ProfileFormComponent extends BaseFormComponent<Pessoa>{
     });
   }
   protected loadResource() {
-    
-  
-      this.authService.getUser().subscribe((res) => {
-        this.resource = res;
-        this.tokenService.storeUser(res);
-        this.resourceForm.patchValue(this.resource);
-      })
-    
-   
+
+
+    this.profileService.getUser().subscribe((res) => {
+      this.resource = res;
+      this.tokenService.storeUser(res);
+      let tmpDate = (moment(res.dataNascimento, 'YYYY-MM-DD').format('yyyy-MM-DD'))
+      res.dataNascimento = null;
+      this.resourceForm.patchValue(res);
+      this.resourceForm.controls['dataNascimento'].setValue(tmpDate)
+      this.loading = false;
+    })
+
+
   }
 
   protected setCurrentAction() {
